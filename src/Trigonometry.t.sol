@@ -19,7 +19,12 @@ contract TrigonometryTest is DSTest {
 
   uint256 constant SCALE = 1e18 * 2 * PI; // scale to add to trig inputs so same output is expected
   uint256 constant PI    = 3141592653589793238; // pi as an 18 decimal value (wad)
-  int256  constant TOL   = 380000000000000; // equal to 0.00038 tolerance on y = sin(x) outputs
+
+  // We test with an absolute tolerance check, by asserting that the difference between the truth value
+  // and returned value is less than TOL. With the current 32 byte lookup table, we can set this tolerance
+  // as low as 9e-8 for the y=sin(x) and y=cos(x) outputs. With a 16 byte lookup table, we had to set this
+  // value to 0.00038 for tests to pass
+  int256 constant TOL   = 90000000000; // was a wad, so 90000000000 = 90000000000/1e18 = 9e-8
 
   function abs(int256 a) internal pure returns (int256) {
     return a >= 0 ? a : -a;
