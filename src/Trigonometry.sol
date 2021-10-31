@@ -99,10 +99,13 @@ library Trigonometry {
    * @notice Return the cosine of a value, specified in radians scaled by 1e18
    * @dev This is identical to the sin() method, and just computes the value by delegating to the
    * sin() method using the identity cos(x) = sin(x + pi/2)
+   * @dev Overflow when `angle + PI_OVER_TWO > type(uint256).max` is ok, results are still accurate
    * @param _angle Angle to convert
    * @return Result scaled by 1e18
    */
   function cos(uint256 _angle) public pure returns (int256) {
-    return sin(_angle + PI_OVER_TWO);
+    unchecked {
+      return sin(_angle + PI_OVER_TWO);
+    }
   }
 }

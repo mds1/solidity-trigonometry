@@ -1,7 +1,7 @@
-// SPDX-License-Identifier: Unlicense
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
-import "ds-test/test.sol";
 
+import "ds-test/test.sol";
 import "./Trigonometry.sol";
 
 contract TestTrigonometry {
@@ -108,6 +108,11 @@ contract Sine is TrigonometryTest {
   function testSin20() public {
     assertApproxEq(trig.sin(SCALE + PI * 2), 0);
   }
+
+  // --- Verify the method cannot revert for any input ---
+  function testNoReverts(uint256 _angle) public view { 
+    trig.sin(_angle);
+  }
 }
 
 contract Cosine is TrigonometryTest {
@@ -173,5 +178,10 @@ contract Cosine is TrigonometryTest {
   }
   function testCos20() public {
     assertApproxEq(trig.cos(SCALE + PI * 2), 1e18);
+  }
+
+  // --- Verify the method cannot revert for any input ---
+  function testNoReverts(uint256 _angle) public view { 
+    trig.cos(_angle);
   }
 }
