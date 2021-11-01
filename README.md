@@ -36,5 +36,5 @@ This library is developed with [dapptools](https://github.com/dapphub/dapptools/
 
 To update gas snapshots:
 1. Install [duppgrade](https://github.com/Rari-Capital/duppgrade)
-2. Switch dapptools to the WIP branch with gas snapshot functionality with `duppgrade dapphub/dapptools gas-snapshot-dev`
+2. Switch dapptools to the WIP branch with gas snapshot functionality with `duppgrade gas-snapshot-dev`
 3. Run `dapp --snapshot`
