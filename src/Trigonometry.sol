@@ -55,7 +55,7 @@ library Trigonometry {
    * @param _angle Angle to convert
    * @return Result scaled by 1e18
    */
-  function sin(uint256 _angle) public pure returns (int256) {
+  function sin(uint256 _angle) internal pure returns (int256) {
     unchecked {
       // Convert angle from from arbitrary radian value (range of 0 to 2pi) to the algorithm's range
       // of 0 to 1,073,741,824
@@ -106,7 +106,7 @@ library Trigonometry {
    * @param _angle Angle to convert
    * @return Result scaled by 1e18
    */
-  function cos(uint256 _angle) public pure returns (int256) {
+  function cos(uint256 _angle) internal pure returns (int256) {
     unchecked {
       return sin(_angle + PI_OVER_TWO);
     }

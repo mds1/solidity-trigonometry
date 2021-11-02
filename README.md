@@ -2,7 +2,7 @@
 
 Solidity library offering basic trigonometry functions where inputs and outputs are integers.
 Inputs are specified in radians scaled by 1e18, and similarly outputs are scaled by 1e18.
-Each invocation of the `sin()` and `cos()` functions cost around 5000&ndash;5600 gas (see `.gas-snapshot`) for more info.
+Each invocation of the `sin()` and `cos()` functions cost around 2000&ndash;2500 gas (see `.gas-snapshot`) for more info.
 
 This implementation is based off the Solidity trigonometry library written by
 [Lefteris Karapetsas](https://twitter.com/LefterisJP)
