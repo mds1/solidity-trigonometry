@@ -1,0 +1,14 @@
+{
+  "name": "solidity-trigonometry",
+  "version": "1.0.0",
+  "repository": "https://github.com/mds1/solidity-trigonometry.git",
+  "author": "Matt Solomon <matt@mattsolomon.dev>",
+  "license": "MIT",
+  "devDependencies": {
+    "eth-scribble": "^0.5.6",
+    "scribble-generator": "^1.0.0"
+  },
+  "scripts": {
+    "scribble": "yarn scribble-generate"
+  }
+}
