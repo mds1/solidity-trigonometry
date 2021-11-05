@@ -2,7 +2,7 @@
 pragma solidity ^0.8.7;
 
 import "ds-test/test.sol";
-import "./Trigonometry.sol";
+import "../Trigonometry.sol";
 
 contract TestTrigonometry {
   function sin(uint256 _angle) public pure returns (int256) {
@@ -41,6 +41,26 @@ contract TrigonometryTest is DSTest {
 
   function setUp() public {
     trig = new TestTrigonometry();
+  }
+}
+
+contract Scribble is TrigonometryTest {
+  // Trying to autogenerate some scribble properties from these tests
+
+  function testNoReverts1(uint256 _angle) public view { 
+    // Should not revert for any input
+    trig.sin(_angle);
+  }
+
+  function testNoReverts2(uint256 _angle) public { 
+    // Should not revert for any input, but including an assertion
+    assertLt(-1.1e18, trig.sin(_angle));
+  }
+
+  function testSinOutputRange(uint256 _angle) public {
+    // Verify outputs are between -1e18 and 1e18
+    assertGe(1e18, trig.sin(_angle));
+    assertLe(-1e18, trig.sin(_angle));
   }
 }
 
