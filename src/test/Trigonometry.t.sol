@@ -2,7 +2,7 @@
 pragma solidity ^0.8.7;
 
 import "ds-test/test.sol";
-import "./Trigonometry.sol";
+import "../Trigonometry.sol";
 
 contract TestTrigonometry {
   function sin(uint256 _angle) public pure returns (int256) {
