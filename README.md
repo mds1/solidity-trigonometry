@@ -47,14 +47,11 @@ If you don't have Foundry installed, run the command below to get `foundryup`, t
 curl -L https://foundry.paradigm.xyz | bash
 ```
 
-Then in a new terminal session or after reloading your PATH, run it to get the latest `forge` and `cast` binaries:
+Then in a new terminal session or after reloading your PATH, run `foundryup` to get the latest `forge` and `cast` binaries.
 
-```
-foundryup
-```
-
-Advanced ways to use `foundryup` and other documentation can be found in the [foundryup package]([./foundryup/README.md](https://github.com/gakonst/foundry/tree/master/foundryup)).
 
 ### Testing
 
-Run tests with `forge test`, and update gas snapshots with `PROPTEST_CASES=10000 forge snapshot`
+Run tests with `forge test`, and update gas snapshots with `FOUNDRY_FUZZ_RUNS=50000 forge snapshot` (this will take a while to run since that many FFI runs can be slow).
+
+NOTE: Tests are configured to run with the `--ffi` flag enabled for fuzz testing, so review the test commands before executing them to ensure you aren't running any malicious code on your machine.
