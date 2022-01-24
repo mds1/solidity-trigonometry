@@ -18,6 +18,9 @@ which in turn is based on an [article](http://web.archive.org/web/20120301144605
 
 ## Usage
 
+When using this library, it's recommended to wrap input values (which are in radians) between `2 * PI * 1e18` and `4 * PI * 1e18` to avoid precision errors.
+This is equivalent to wrapping standard values between 0 and 2π. There is some flexibility on that range, but it should stay within reasonable bounds.
+
 To use this in a [Foundry](https://github.com/gakonst/foundry/) project, install it with:
 
 ```sh
