@@ -20,7 +20,7 @@
  *     http://web.archive.org/web/20120301144605/http://www.dattalo.com/technical/software/pic/picsine.html
  */
 
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.0;
 
 library Trigonometry {
   // Table index into the trigonometric table
