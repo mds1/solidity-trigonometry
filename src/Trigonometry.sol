@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
 /**
  * @notice Solidity library offering basic trigonometry functions where inputs and outputs are
  * integers. Inputs are specified in radians scaled by 1e18, and similarly outputs are scaled by 1e18.
@@ -19,9 +21,6 @@
  * Which in turn is based from a now deleted article which can be found in the Wayback Machine:
  *     http://web.archive.org/web/20120301144605/http://www.dattalo.com/technical/software/pic/picsine.html
  */
-
-pragma solidity ^0.8.0;
-
 library Trigonometry {
   // Table index into the trigonometric table
   uint256 constant INDEX_WIDTH        = 8;
