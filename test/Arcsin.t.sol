@@ -8,6 +8,8 @@ import {PRBMathSD59x18 as P} from "prb-math/PRBMathSD59x18.sol";
 contract ArcsinTest is Test {
   using P for int256;
 
+  uint256 constant TOL = 6e14;
+
   /*
   The pairs of points we are testing. Their negative versions are also tested.
   sin(0) = 0 --> 0 = arcsin(0)
