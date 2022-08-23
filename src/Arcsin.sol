@@ -7,9 +7,10 @@ import {PRBMathSD59x18 as P} from "prb-math/PRBMathSD59x18.sol";
  * @title Arcsine calculator.
  * @author Md Abid Sikder
  *
- * @notice Calculates arcsine. Uses the polynomial approximation functions found
- * in https://dsp.stackexchange.com/a/25771, but chooses between them at
- * x=0.4788 due to differences in the relative errors as can be seen here
+ * @notice Calculates arcsine. Fuzz testing shows that relative error is always
+ * smaller than 0.01%. Uses the polynomial approximation functions found in
+ * https://dsp.stackexchange.com/a/25771, but chooses between them at x=0.4788
+ * due to differences in the relative errors as can be seen here
  * https://www.desmos.com/calculator/wrfwjhythe
  *
  * @dev See the desmos link for what functions f and g in the code refer to.
