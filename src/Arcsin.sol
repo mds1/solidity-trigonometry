@@ -4,16 +4,15 @@ pragma solidity ^0.8.13;
 import {PRBMathSD59x18 as P} from "prb-math/PRBMathSD59x18.sol";
 
 /**
- * @title Arcsin calculator.
+ * @title Arcsine calculator.
  * @author Md Abid Sikder
  *
- * @notice Calculates arcsine. Uses the approximation functions found in
- * https://dsp.stackexchange.com/a/25771, but chooses between them at x=0.4788
- * due to differences in the relative errors as can be seen here
+ * @notice Calculates arcsine. Uses the polynomial approximation functions found
+ * in https://dsp.stackexchange.com/a/25771, but chooses between them at
+ * x=0.4788 due to differences in the relative errors as can be seen here
  * https://www.desmos.com/calculator/wrfwjhythe
  *
- * @dev See the desmos link for what function f refers to and what function g refers to.
- *
+ * @dev See the desmos link for what functions f and g in the code refer to.
  */
 library Arcsin {
   using P for int256;
@@ -59,6 +58,13 @@ library Arcsin {
     return _x.mul(ONE + xSq.mul(frac1Div6 + xSq.mul(frac3Div40 + xSq.mul(frac15Div336))));
   }
 
+  /**
+     * @notice Arcsine function
+     *
+     * @param _x A integer with 18 fixed decimal points, where the whole part is bounded inside of [-1,1]
+     *
+     * @return The arcsine, with 18 fixed decimal points
+     */
   function arcsin(int256 _x) internal pure returns (int256) {
     int256 DOMAIN_MAX = 1000000000000000000;
     int256 DOMAIN_MIN = -DOMAIN_MAX;
