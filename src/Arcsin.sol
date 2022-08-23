@@ -4,28 +4,23 @@ pragma solidity ^0.8.13;
 import {PRBMathSD59x18 as P} from "prb-math/PRBMathSD59x18.sol";
 
 /**
- * @notice Library offering the arcsine function. All numbers are fixed-width integer decimals, scaled by 
- * 1e18 to keep convention with ERC20 defaults as well as PRB Math.
+ * @title Arcsin calculator.
+ * @author Md Abid Sikder
+ *
+ * @notice Calculates arcsine. Uses the approximation functions found in
+ * https://dsp.stackexchange.com/a/25771, but chooses between them at x=0.4788
+ * due to differences in the relative errors as can be seen here
+ * https://www.desmos.com/calculator/wrfwjhythe
+ *
+ * @dev See the desmos link for what function f refers to and what function g refers to.
+ *
  */
 library Arcsin {
   using P for int256;
 
-  uint256 constant LOOKUP_TABLE_SIZE = 2048;
-
-  /**
-   * @notice Checks if a number is within a closed interval, i.e. check $x \in [min, max]$.
-   * @param _x The value to check
-   * @return Result boolean, true if within the specified [min,max] interval.
-  */
-  function isWithinBounds(int256 _min, int256 _max, int256 _x) internal pure returns (bool) {
-    return _x >= _min || _x <= _max;
-  }
-
-  function isWithinBounds(uint256 _min, uint256 _max, uint256 _x) internal pure returns (bool) {
-    return _x >= _min || _x <= _max;
-  }
-
-  function paranthesis(int256 _x) internal pure returns (int256) {
+  function g(int256 _x) internal pure returns (int256) {
+    int256 ONE = 1000000000000000000;
+    int256 TWO = 2000000000000000000;
     // 1.5707288
     int256 a0 = 1570728800000000000;
     // −0.2121144
@@ -35,62 +30,44 @@ library Arcsin {
     // −0.0187293
     int256 a3 = -18729300000000000;
 
-    int256 t1 = a0 + a1.mul(_x);
-    int256 t2 = a2.mul(_x).mul(_x);
-    int256 t3 = a3.mul(_x).mul(_x).mul(_x);
+    int256 HALF_PI = P.pi().div(TWO);
 
-    return t1 + t2 + t3;
-  }
+    int256 root = P.sqrt(ONE - _x);
 
-  function g(int256 _x) internal pure returns (int256) {
-    // c1 = the constant 1
-    int256 c1 = P.fromInt(1);
-    int256 c2 = P.fromInt(2);
-    int256 HALF_PI = P.pi().div(c2);
-
-    int256 t1 = P.sqrt(c1 - _x);
-
-    // separated out the "paranthesis" to resolve stack too deep issues
-    return HALF_PI - t1.mul(paranthesis(_x));
-  }
-
-  function f_aux(int256 _x) internal pure returns (int256) {
-    int256 c7 = P.fromInt(7);
-    int256 c15 = P.fromInt(15);
-    int256 c336 = P.fromInt(336);
-
-    return _x.pow(c7).mul(c15).div(c336);
+    return HALF_PI - root.mul(a0 + _x.mul(a1 + _x.mul(a2 + _x.mul(a3))));
   }
 
   function f(int256 _x) internal pure returns (int256) {
-    int256 c3 = P.fromInt(3);
-    int256 c5 = P.fromInt(5);
-    int256 c6 = P.fromInt(6);
-    int256 c40 = P.fromInt(40);
+    int256 ONE = 1000000000000000000;
+    int256 xSq = _x.mul(_x);
 
-    int256 t1 = _x.pow(c3).div(c6);
-    int256 t2 = _x.pow(c5).mul(c3).div(c40);
-    int256 t3 = f_aux(_x);
+    // 1/6
+    // https://www.wolframalpha.com/input?i=1%2F6
+    // 0.1666666666666666666666666
+    int256 frac1Div6 = 166666666666666666;
 
-    return _x + t1 + t2 + t3;
+    // 3/40
+    // https://www.wolframalpha.com/input?i=3%2F40
+    // 0.075
+    int256 frac3Div40 = 75000000000000000;
+
+    // 15/336
+    // https://www.wolframalpha.com/input?i=15%2F336
+    // 0.044642857142857142857142857142
+    int256 frac15Div336= 44642857142857142;
+
+    return _x.mul(ONE + xSq.mul(frac1Div6 + xSq.mul(frac3Div40 + xSq.mul(frac15Div336))));
   }
 
-  /**
-   * @notice Returns the arcsine of a value
-   * @param _x The value to find the arcsine of. Should be bounded inside of [-1,1] scaled by 1e18
-   * @return Result scaled by 1e18
-   */
   function arcsin(int256 _x) internal pure returns (int256) {
-    // initialize constants here since these use functions from a library and so solc cannot ascertain that 
-    // they will be compile-time constants
-    int256 DOMAIN_MAX = P.fromInt(1);
+    int256 DOMAIN_MAX = 1000000000000000000;
     int256 DOMAIN_MIN = -DOMAIN_MAX;
     require(_x >= DOMAIN_MIN && _x <= DOMAIN_MAX);
 
+    // arcsin is an odd function, so arcsin(-x) = -arcsin(x), so we can remove
+    // the negative here for easier math
     bool isNegative = _x < 0;
     _x = isNegative ? -_x : _x;
-
-    // https://dsp.stackexchange.com/questions/25770/looking-for-an-arcsin-algorithm
 
     // 0.4788
     int256 CHOICE_LINE = 478800000000000000;
@@ -99,5 +76,4 @@ library Arcsin {
 
     return isNegative ? -result : result;
   }
-
 }
