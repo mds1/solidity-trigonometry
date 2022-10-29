@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./DSTestPlus.sol";
+import "forge-std/Test.sol";
 import "src/Trigonometry.sol";
 
 /**
@@ -50,7 +50,7 @@ contract TestTrigonometry {
   }
 }
 
-contract TrigonometryTest is DSTestPlus {
+contract TrigonometryTest is Test {
   TestTrigonometry trig;
   uint256 constant SCALE = 1e18 * 2 * PI; // scale to add to trig inputs so same output is expected
   uint256 constant PI    = 3141592653589793238; // π as an 18 decimal value (wad), must match the value in Trigonometry.sol
@@ -72,77 +72,77 @@ contract Sine is TrigonometryTest {
 
     string[] memory inputs = new string[](4);
     inputs[0] = "python3";
-    inputs[1] = "src/test/trig.py";
+    inputs[1] = "test/trig.py";
     inputs[2] = "sin";
-    inputs[3] = uintToString(_angle);
+    inputs[3] = vm.toString(_angle);
 
     bytes memory ret = vm.ffi(inputs);
     (int256 output) = abi.decode(ret, (int256));
-    assertApproxEq(trig.sin(_angle), output, TOL);
+    assertApproxEqRel(trig.sin(_angle), output, TOL);
   }
 
   // --- Angles between 0 <= x <= 2π ---
   function testSin1() public {
-    assertApproxEq(trig.sin(0), 0, TOL);
+    assertApproxEqRel(trig.sin(0), 0, TOL);
   }
   function testSin2() public {
-    assertApproxEq(trig.sin(PI / 8), 382683432365089800, TOL);
+    assertApproxEqRel(trig.sin(PI / 8), 382683432365089800, TOL);
   }
   function testSin3() public {
-    assertApproxEq(trig.sin(PI / 4), 707106781186547500, TOL);
+    assertApproxEqRel(trig.sin(PI / 4), 707106781186547500, TOL);
   }
   function testSin4() public {
-    assertApproxEq(trig.sin(PI / 2), 1e18, TOL);
+    assertApproxEqRel(trig.sin(PI / 2), 1e18, TOL);
   }
   function testSin5() public {
-    assertApproxEq(trig.sin(PI * 3 / 4), 707106781186547600, TOL);
+    assertApproxEqRel(trig.sin(PI * 3 / 4), 707106781186547600, TOL);
   }
   function testSin6() public {
-    assertApproxEq(trig.sin(PI), 0, TOL);
+    assertApproxEqRel(trig.sin(PI), 0, TOL);
   }
   function testSin7() public {
-    assertApproxEq(trig.sin(PI * 5 / 4), -707106781186547600, TOL);
+    assertApproxEqRel(trig.sin(PI * 5 / 4), -707106781186547600, TOL);
   }
   function testSin8() public {
-    assertApproxEq(trig.sin(PI * 3 / 2), -1e18, TOL);
+    assertApproxEqRel(trig.sin(PI * 3 / 2), -1e18, TOL);
   }
   function testSin9() public {
-    assertApproxEq(trig.sin(PI * 7 / 4), -707106781186547600, TOL);
+    assertApproxEqRel(trig.sin(PI * 7 / 4), -707106781186547600, TOL);
   }
   function testSin10() public {
-    assertApproxEq(trig.sin(PI * 2), 0, TOL);
+    assertApproxEqRel(trig.sin(PI * 2), 0, TOL);
   }
 
   // --- Angles above 2π that must be wrapped ---
   function testSin11() public {
-    assertApproxEq(trig.sin(SCALE + 0), 0, TOL);
+    assertApproxEqRel(trig.sin(SCALE + 0), 0, TOL);
   }
   function testSin12() public {
-    assertApproxEq(trig.sin(SCALE + PI / 8), 382683432365089800, TOL);
+    assertApproxEqRel(trig.sin(SCALE + PI / 8), 382683432365089800, TOL);
   }
   function testSin13() public {
-    assertApproxEq(trig.sin(SCALE + PI / 4), 707106781186547500, TOL);
+    assertApproxEqRel(trig.sin(SCALE + PI / 4), 707106781186547500, TOL);
   }
   function testSin14() public {
-    assertApproxEq(trig.sin(SCALE + PI / 2), 1e18, TOL);
+    assertApproxEqRel(trig.sin(SCALE + PI / 2), 1e18, TOL);
   }
   function testSin15() public {
-    assertApproxEq(trig.sin(SCALE + PI * 3 / 4), 707106781186547600, TOL);
+    assertApproxEqRel(trig.sin(SCALE + PI * 3 / 4), 707106781186547600, TOL);
   }
   function testSin16() public {
-    assertApproxEq(trig.sin(SCALE + PI), 0, TOL);
+    assertApproxEqRel(trig.sin(SCALE + PI), 0, TOL);
   }
   function testSin17() public {
-    assertApproxEq(trig.sin(SCALE + PI * 5 / 4), -707106781186547600, TOL);
+    assertApproxEqRel(trig.sin(SCALE + PI * 5 / 4), -707106781186547600, TOL);
   }
   function testSin18() public {
-    assertApproxEq(trig.sin(SCALE + PI * 3 / 2), -1e18, TOL);
+    assertApproxEqRel(trig.sin(SCALE + PI * 3 / 2), -1e18, TOL);
   }
   function testSin19() public {
-    assertApproxEq(trig.sin(SCALE + PI * 7 / 4), -707106781186547600, TOL);
+    assertApproxEqRel(trig.sin(SCALE + PI * 7 / 4), -707106781186547600, TOL);
   }
   function testSin20() public {
-    assertApproxEq(trig.sin(SCALE + PI * 2), 0, TOL);
+    assertApproxEqRel(trig.sin(SCALE + PI * 2), 0, TOL);
   }
 }
 
@@ -157,76 +157,76 @@ contract Cosine is TrigonometryTest {
 
     string[] memory inputs = new string[](4);
     inputs[0] = "python3";
-    inputs[1] = "src/test/trig.py";
+    inputs[1] = "test/trig.py";
     inputs[2] = "cos";
-    inputs[3] = uintToString(_angle);
+    inputs[3] = vm.toString(_angle);
 
     bytes memory ret = vm.ffi(inputs);
     (int256 output) = abi.decode(ret, (int256));
-    assertApproxEq(trig.cos(_angle), output, TOL);
+    assertApproxEqRel(trig.cos(_angle), output, TOL);
   }
 
   // --- Angles between 0 <= x <= 2π ---
   function testCos1() public {
-    assertApproxEq(trig.cos(0), 1e18, TOL);
+    assertApproxEqRel(trig.cos(0), 1e18, TOL);
   }
   function testCos2() public {
-    assertApproxEq(trig.cos(PI / 8), 923879532511286756, TOL);
+    assertApproxEqRel(trig.cos(PI / 8), 923879532511286756, TOL);
   }
   function testCos3() public {
-    assertApproxEq(trig.cos(PI / 4), 707106781186547600, TOL);
+    assertApproxEqRel(trig.cos(PI / 4), 707106781186547600, TOL);
   }
   function testCos4() public {
-    assertApproxEq(trig.cos(PI / 2), 0, TOL);
+    assertApproxEqRel(trig.cos(PI / 2), 0, TOL);
   }
   function testCos5() public {
-    assertApproxEq(trig.cos(PI * 3 / 4), -707106781186547600, TOL);
+    assertApproxEqRel(trig.cos(PI * 3 / 4), -707106781186547600, TOL);
   }
   function testCos6() public {
-    assertApproxEq(trig.cos(PI), -1e18, TOL);
+    assertApproxEqRel(trig.cos(PI), -1e18, TOL);
   }
   function testCos7() public {
-    assertApproxEq(trig.cos(PI * 5 / 4), -707106781186547600, TOL);
+    assertApproxEqRel(trig.cos(PI * 5 / 4), -707106781186547600, TOL);
   }
   function testCos8() public {
-    assertApproxEq(trig.cos(PI * 3 / 2), 0, TOL);
+    assertApproxEqRel(trig.cos(PI * 3 / 2), 0, TOL);
   }
   function testCos9() public {
-    assertApproxEq(trig.cos(PI * 7 / 4), 707106781186547600, TOL);
+    assertApproxEqRel(trig.cos(PI * 7 / 4), 707106781186547600, TOL);
   }
   function testCos10() public {
-    assertApproxEq(trig.cos(PI * 2), 1e18, TOL);
+    assertApproxEqRel(trig.cos(PI * 2), 1e18, TOL);
   }
 
   // --- Angles above 2π that must be wrapped ---
   function testCos11() public {
-    assertApproxEq(trig.cos(SCALE + 0), 1e18, TOL);
+    assertApproxEqRel(trig.cos(SCALE + 0), 1e18, TOL);
   }
   function testCos12() public {
-    assertApproxEq(trig.cos(SCALE + PI / 8), 923879532511286756, TOL);
+    assertApproxEqRel(trig.cos(SCALE + PI / 8), 923879532511286756, TOL);
   }
   function testCos13() public {
-    assertApproxEq(trig.cos(SCALE + PI / 4), 707106781186547600, TOL);
+    assertApproxEqRel(trig.cos(SCALE + PI / 4), 707106781186547600, TOL);
   }
   function testCos14() public {
-    assertApproxEq(trig.cos(SCALE + PI / 2), 0, TOL);
+    assertApproxEqRel(trig.cos(SCALE + PI / 2), 0, TOL);
   }
   function testCos15() public {
-    assertApproxEq(trig.cos(SCALE + PI * 3 / 4), -707106781186547600, TOL);
+    assertApproxEqRel(trig.cos(SCALE + PI * 3 / 4), -707106781186547600, TOL);
   }
   function testCos16() public {
-    assertApproxEq(trig.cos(SCALE + PI), -1e18, TOL);
+    assertApproxEqRel(trig.cos(SCALE + PI), -1e18, TOL);
   }
   function testCos17() public {
-    assertApproxEq(trig.cos(SCALE + PI * 5 / 4), -707106781186547600, TOL);
+    assertApproxEqRel(trig.cos(SCALE + PI * 5 / 4), -707106781186547600, TOL);
   }
   function testCos18() public {
-    assertApproxEq(trig.cos(SCALE + PI * 3 / 2), 0, TOL);
+    assertApproxEqRel(trig.cos(SCALE + PI * 3 / 2), 0, TOL);
   }
   function testCos19() public {
-    assertApproxEq(trig.cos(SCALE + PI * 7 / 4), 707106781186547600, TOL);
+    assertApproxEqRel(trig.cos(SCALE + PI * 7 / 4), 707106781186547600, TOL);
   }
   function testCos20() public {
-    assertApproxEq(trig.cos(SCALE + PI * 2), 1e18, TOL);
+    assertApproxEqRel(trig.cos(SCALE + PI * 2), 1e18, TOL);
   }
 }
