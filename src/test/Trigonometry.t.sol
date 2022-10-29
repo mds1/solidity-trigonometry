@@ -72,7 +72,7 @@ contract Sine is TrigonometryTest {
 
     string[] memory inputs = new string[](4);
     inputs[0] = "python3";
-    inputs[1] = "test/trig.py";
+    inputs[1] = "src/test/trig.py";
     inputs[2] = "sin";
     inputs[3] = uintToString(_angle);
 
@@ -157,7 +157,7 @@ contract Cosine is TrigonometryTest {
 
     string[] memory inputs = new string[](4);
     inputs[0] = "python3";
-    inputs[1] = "test/trig.py";
+    inputs[1] = "src/test/trig.py";
     inputs[2] = "cos";
     inputs[3] = uintToString(_angle);
 

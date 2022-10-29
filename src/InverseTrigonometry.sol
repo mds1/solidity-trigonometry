@@ -15,7 +15,7 @@ import {PRBMathSD59x18 as P} from "prb-math/PRBMathSD59x18.sol";
  *
  * @dev See the desmos link for what functions f and g in the code refer to.
  */
-library Arcsin {
+library InverseTrigonometry {
   using P for int256;
 
   function g(int256 _x) internal pure returns (int256) {

@@ -2,7 +2,7 @@
 pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
-import {Arcsin as A} from "src/Arcsin.sol";
+import {InverseTrigonometry as A} from "src/InverseTrigonometry.sol";
 import {PRBMathSD59x18 as P} from "prb-math/PRBMathSD59x18.sol";
 
 contract ArcsinTest is Test {
@@ -66,7 +66,7 @@ contract ArcsinTest is Test {
 
     string[] memory inputs = new string[](4);
     inputs[0] = "python3";
-    inputs[1] = "test/trig.py";
+    inputs[1] = "src/test/trig.py";
     inputs[2] = "arcsin";
     inputs[3] = uintToString(_x);
 
