@@ -1,23 +1,18 @@
-# See more config options at https://github.com/gakonst/foundry/tree/master/config
-# The "default" profile will be used if none is specified
-# The "ci" profile inherits from it, with modifications for use in CI
+[profile.default]
+src = 'src'
+out = 'out'
+libs = ['lib']
 
-[default]
-# forge config
+# test config
 ffi = true
 fuzz-runs = 100
 gas_reports = ["*"]
 verbosity = 3
+
 # solidity config
-solc-version = "0.8.11"
+solc-version = "0.8.13"
 optimizer = true
 optimizer-runs = 9999999
 
-[ci]
+[profile.ci]
 fuzz-runs = 50000
-
-# Verbosity levels (https://onbjerg.github.io/foundry-book/forge/tests.html#logs-and-traces)
-#   Level 2 (-vv): Logs emitted during tests are also displayed.
-#   Level 3 (-vvv): Stack traces for failing tests are also displayed.
-#   Level 4 (-vvvv): Stack traces for all tests are displayed, and setup traces for failing tests are displayed.
-#   Level 5 (-vvvvv): Stack traces and setup traces are always displayed.

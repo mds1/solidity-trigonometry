@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import "./DSTestPlus.sol";
-import "../Trigonometry.sol";
+import "src/Trigonometry.sol";
 
 /**
  * @dev A note about precision and fuzz testing this library.
